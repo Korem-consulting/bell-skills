@@ -1,0 +1,24 @@
+# Generated from an upstream source; changes made here are overwritten by the next sync.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check skills and manifests
+        run: scripts/check.sh
+      # Claude Code only offers an update when plugin.json's version changes.
+      - name: Version raised when skills change
+        if: github.event_name == 'pull_request'
+        run: scripts/check-version.sh origin/${{ github.base_ref }}

@@ -1,0 +1,11 @@
+{
+  "name": "bell-skills",
+  "displayName": "Bell Statistics — geo experiments",
+  "version": "0.2.3",
+  "description": "Skills that teach an agent how to run a Bell geo experiment properly: prepare a client's data without reading it, choose a sound design, and read the result without overclaiming. Pairs with the Bell MCP connector.",
+  "author": { "name": "Bell Statistics", "url": "https://bellstatistics.com" },
+  "homepage": "https://bellstatistics.com",
+  "repository": "https://github.com/Korem-consulting/bell-skills",
+  "license": "Apache-2.0",
+  "keywords": ["geo-experiment", "incrementality", "synthetic-control", "marketing-measurement", "bell"]
+}

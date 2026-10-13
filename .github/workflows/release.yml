@@ -1,0 +1,39 @@
+# Generated from an upstream source; changes made here are overwritten by the next sync.
+# On every push to main whose plugin.json version has no release yet: build one
+# zip per skill and publish them as a GitHub release tagged v<version>.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read version
+        id: v
+        run: echo "version=$(jq -r .version .claude-plugin/plugin.json)" >> "$GITHUB_OUTPUT"
+      - name: Skip if already released
+        id: exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "v${{ steps.v.outputs.version }}" >/dev/null 2>&1; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build skill zips
+        if: steps.exists.outputs.skip != 'true'
+        run: scripts/build-zips.sh dist
+      - name: Publish release
+        if: steps.exists.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.v.outputs.version }}" dist/*.zip \
+            --target "$GITHUB_SHA" --title "v${{ steps.v.outputs.version }}" \
+            --notes "Claude.ai: upload each zip under Settings → Capabilities → Skills. Claude Code: /plugin marketplace update bell-statistics."

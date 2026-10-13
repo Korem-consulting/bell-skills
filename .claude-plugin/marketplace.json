@@ -1,0 +1,11 @@
+{
+  "name": "bell-statistics",
+  "owner": { "name": "Bell Statistics" },
+  "plugins": [
+    {
+      "name": "bell-skills",
+      "source": "./",
+      "description": "Skills for running Bell geo experiments from an agent: data preparation, design verdicts, reading results."
+    }
+  ]
+}
