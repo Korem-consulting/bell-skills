@@ -14,8 +14,8 @@ for dir in "$root"/skills/*/; do
   if [[ ! -f "$dir/SKILL.md" ]]; then echo "MISSING  $name/SKILL.md"; fail=1; continue; fi
   fm="$(sed -n '2,10p' "$dir/SKILL.md" | grep -E '^name:' | head -1 | sed -E 's/^name:[[:space:]]*//')"
   if [[ "$fm" != "$name" ]]; then echo "NAME     $name: frontmatter name is '$fm'"; fail=1; continue; fi
-  # A skill is uploaded to Claude.ai as its own zip, so it may only point at
-  # files inside its own directory.
+  # A skill can be installed on its own (npx skills, a single-skill upload),
+  # so it may only point at files inside its own directory.
   for ref in $(grep -oE '`references/[A-Za-z0-9_./-]+`' "$dir/SKILL.md" | tr -d '`' | sort -u); do
     if [[ ! -f "$dir/$ref" ]]; then echo "MISSING  $name/$ref"; fail=1; fi
   done
