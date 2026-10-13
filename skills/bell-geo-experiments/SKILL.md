@@ -100,19 +100,23 @@ For teams who already run Meta's GeoLift, read `bell-from-geolift`.
 
 ## What you cannot do from here yet
 
-Datasets are shared with the Bell web app, experiments are not.
+Datasets and experiments are shared with the Bell web app.
 
 - **Datasets: shared both ways.** An upload through the connector lands in
   the user's organization and appears in the app under Data;
   `list_datasets` shows the organization's datasets, including ones
   uploaded in the app.
-- **Experiments: not shared.** A design or results analysis run here is
-  not saved as an experiment in the app, and experiments set up in the app
-  are not listed here. To keep a design, the user recreates it in the app.
+- **Experiments: every analysis is saved into one.** Each `start_*` call
+  takes `experiment_name` (creates a new experiment in the app, marked
+  "Created via Claude") or `experiment_id` (adds to an existing one,
+  including one set up in the app — `list_datasets` lists each dataset's
+  experiments). Reuse the returned `experiment_id` for every later step of
+  the same work, or each call makes another draft. An experiment is tied
+  to one dataset: results on a re-uploaded dataset need a new experiment.
 
-When a results job succeeds it hands you a link into the app; follow it
-for charts. There is no live dashboard fed from the connector. Do not
-imply otherwise.
+When a job succeeds it hands you `app_url`, a link to the experiment that
+now holds the analysis; give it to the user. There is no live dashboard
+fed from the connector. Do not imply otherwise.
 
 ## Further reading
 
