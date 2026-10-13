@@ -57,11 +57,10 @@ custom connector.
 /plugin install bell-skills@bell-statistics
 ```
 
-**Claude.ai / Claude Desktop** — download the zips from the
-[latest release](https://github.com/Korem-consulting/bell-skills/releases/latest)
-and upload each one under *Settings → Capabilities → Skills*. Start with
-`bell-geo-experiments` and `bell-data-prep`. Connectors and skills are
-installed separately: adding the connector does not add the skills.
+**Claude.ai, Claude Desktop and Cowork** — open *Customize → Plugins*,
+select *Add marketplace*, enter `Korem-consulting/bell-skills`, then
+install **bell-skills**. Connectors and skills are installed separately:
+adding the connector does not add the skills.
 
 **Cursor, Codex, Copilot, Gemini CLI and other agents:**
 
@@ -82,9 +81,9 @@ data without reading it. Install with `pip install pandas openpyxl pyarrow`.
 
 ## Updating
 
-Claude Code: `/plugin marketplace update bell-statistics`. Claude.ai:
-re-upload the zips from the newest release. Other agents: re-run
-`npx skills add`.
+Claude Code: `/plugin marketplace update bell-statistics`. Claude.ai,
+Desktop and Cowork: *Check for updates* on the marketplace, or turn on
+*Sync automatically*. Other agents: re-run `npx skills add`.
 
 ## Support
 
