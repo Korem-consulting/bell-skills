@@ -113,17 +113,24 @@ curl -sS -X PUT --upload-file out.csv '<upload_url>'
 register_dataset(file_ref, time_col, location_col, kpi_col, granularity, mode, week_start_day, last_mature_date, original_filename)
 ```
 
-If curl cannot connect at all — "could not resolve host", connection
-refused or reset, or a proxy refusing the host — you are in a sandbox that
-blocks outbound traffic, as Claude.ai's code execution does by default.
-Don't look for another route, and don't read the file into the
-conversation. Tell the user the one-time fix, naming the host from
-`upload_url` (normally `api.bellstatistics.com`): *Settings → Capabilities
-→ Code execution and file creation → Additional allowed domains*, add the
-host, then ask again. On a Team or Enterprise plan an org admin may have to
-allow it. The tool's `if_upload_is_blocked` field has the exact wording.
-Offer the alternative in the same breath: upload the file in the Bell app,
-then pick it up here with `list_datasets`.
+If you can't run a shell command, or curl cannot connect at all — "could
+not resolve host", connection refused or reset, or a proxy refusing the
+host — don't look for another route, and don't read the file into the
+conversation. Give the user `browser_upload_url` to open in their browser
+and drop the CSV there. If you transformed the data in steps 2–3, the file
+to upload is your output, not the user's original: save it, give it to them
+to download, and say which file to drop. When they come back, call
+`check_upload` with the same `file_ref`: it confirms the file arrived and
+returns its columns and first rows, which you choose the columns from (and
+which show whether they uploaded the right file). Then call
+`register_dataset`. If the page said the link expired or was used, call
+`create_dataset_upload` again and use the new `file_ref`. The tool's `if_upload_is_blocked` field has the exact wording.
+
+On Claude.ai, also mention the one-time fix that lets you upload directly:
+*Settings → Capabilities → Code execution and file creation → Additional
+allowed domains*, add the host from `upload_url` (normally
+`api.bellstatistics.com`). On a Team or Enterprise plan an org admin may
+have to allow it.
 
 An HTTP error from Bell itself is different, and comes back as JSON: 403
 means the link expired and 409 that it was already used. For either, call
