@@ -41,7 +41,7 @@ themselves never see it.
 Claude Code:
 
 ```bash
-claude mcp add --transport http bell https://bell-mcp.onrender.com/mcp \
+claude mcp add --transport http bell https://mcp.bellstatistics.com/v1 \
   --header "X-Client-Secret: bell_xxxxxxxx"
 ```
 
